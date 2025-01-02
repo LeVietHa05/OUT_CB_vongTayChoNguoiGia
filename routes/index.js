@@ -22,6 +22,7 @@ router.get('/', function (req, res, next) {
 
 router.get("/chartdata", (req, res) => {
   let envirData = fs.readFileSync("envirData.json", "utf-8");
+  envirData = JSON.parse(envirData);
   if (envirData.length > 10) {
     return res.json(envirData.slice(envirData.length - 10));
   } else {
