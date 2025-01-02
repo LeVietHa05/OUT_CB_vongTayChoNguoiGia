@@ -53,7 +53,7 @@
         <div class="canvas-holder"><canvas id="tempHumiChart"></canvas></div>
       </div>
       <div>
-        <div class="chart-header">CO2 & CO</div>
+        <div class="chart-header">Air Quality</div>
         <div class="canvas-holder"><canvas id="CO2COchart"></canvas></div>
       </div>
     </div>
@@ -70,7 +70,7 @@
     socket.on("/web/measure", (data) => {
       console.log(data);              
       charts[0].data.labels.push(getCurTime());
-      addData(charts[0], [data.LPG, data.CH4]);
+      addData(charts[0], [data.HEART, data.SPO2]);
       addData(charts[1], [data.TEMP, data.HUM, data.DUST]);
       addData(charts[2], [data.CO2, data.CO]);
       if (charts[0].data.labels.length > 10) {
@@ -79,6 +79,8 @@
         removeData(charts[1]);
         removeData(charts[2]);
       }
+
+      if (+data.SOS == 1) alert("Cảnh báo, người cao tuổi cần giúp đỡ");
     });
 
     function getCurTime() {
@@ -100,9 +102,9 @@
             HUM: random(40, 60),
             CO2: random(100, 110),
             CO: random(120, 170),
-            LPG: random(0, 10),
+            HEART: random(0, 10),
             DUST: random(0, 10),
-            CH4: random(0, 10),
+            SPO2: random(0, 10),
           });
         if (i == time) {
           clearInterval(id);
