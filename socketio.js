@@ -89,6 +89,11 @@ io.on("connection", (socket) => {
         }
         socket.broadcast.emit("/web/measure", data)
     })
+    
+    socket.on("/web/button", (data) => {
+        console.log(`Received data from Web: ${data.status}`);
+        socket.broadcast.emit("/esp32/button", data);
+    })
 
     socket.on("disconnect", () => {
         console.log("A user disconnected");

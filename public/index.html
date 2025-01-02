@@ -17,7 +17,8 @@
       </div>
       <div class="d-flex" style="flex-direction: column;align-items: center;gap: 12px;">
         <div>Current position</div>
-        <div style="padding: 13px 26px; border-radius: 10px; background: rgba(252, 252, 253, 0.2);">Hanoi, Viet Nam</div>
+        <div style="padding: 13px 26px; border-radius: 10px; background: rgba(252, 252, 253, 0.2);">Hanoi, Viet Nam
+        </div>
       </div>
       <div>
         <img src="/images/curved-chevron-right.svg" alt="Forward">
@@ -57,6 +58,18 @@
         <div class="canvas-holder"><canvas id="CO2COchart"></canvas></div>
       </div>
     </div>
+    <!-- //create a switch to turn on/off and then send data to server through /web/button socket topic with data {status: 1/0} in the center of the bottom of the page -->
+    <div class="d-flex justify-center align-center" style="margin-top: 12px;">
+      <div style="margin-right: 12px;">
+        Kích hoạt cảnh báo ngã 
+      </div>
+      <div class="">
+        <label class="switch">
+          <input type="checkbox" id="alertSwitch" onclick="socket.emit('/web/button', {status: +this.checked})">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
   </main>
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -68,7 +81,7 @@
     });
 
     socket.on("/web/measure", (data) => {
-      console.log(data);              
+      console.log(data);
       charts[0].data.labels.push(getCurTime());
       addData(charts[0], [data.HEART, data.SPO2]);
       addData(charts[1], [data.TEMP, data.HUM, data.DUST]);
@@ -137,17 +150,17 @@
         let data1 = processForecastData(data);
         updateWeatherForecast(data1)
       })
-      .then(()=> {
+      .then(() => {
         fetch(uvIndexAPI)
-        .then(res => res.json())
-        .then(data => {
-          const uvIndex = data.current.uvi;
-          const inforFeelLike = document.getElementById('info-feellike');
-          inforFeelLike.innerHTML = `<div><img src="/images/sunny-icon.svg" alt=""></div>
+          .then(res => res.json())
+          .then(data => {
+            const uvIndex = data.current.uvi;
+            const inforFeelLike = document.getElementById('info-feellike');
+            inforFeelLike.innerHTML = `<div><img src="/images/sunny-icon.svg" alt=""></div>
           <div>${(uvIndex)}</div>
           <div>UV Index</div>
           `
-        })
+          })
       })
 
     //map
