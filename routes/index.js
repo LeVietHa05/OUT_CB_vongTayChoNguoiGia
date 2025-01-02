@@ -1,7 +1,6 @@
 var express = require('express');
 const nodemailer = require('nodemailer');
 var router = express.Router();
-var { envirData } = require("../socketio");
 
 // Create a transporter object
 let transporter = nodemailer.createTransport({
@@ -21,6 +20,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get("/chartdata", (req, res) => {
+  let envirData = fs.readFileSync("envirData.json", "utf-8");
   if (envirData.length > 10) {
     return res.json(envirData.slice(envirData.length - 10));
   } else {
