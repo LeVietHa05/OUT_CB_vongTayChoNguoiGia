@@ -17,7 +17,7 @@
       </div>
       <div class="d-flex" style="flex-direction: column;align-items: center;gap: 12px;">
         <div>Current position</div>
-        <div style="padding: 13px 26px; border-radius: 10px; background: rgba(252, 252, 253, 0.2);">Hanoi, Viet Nam
+        <div style="padding: 13px 26px; border-radius: 10px; background: rgba(252, 252, 253, 0.2);">Yen Bai, Viet Nam
         </div>
       </div>
       <div>
@@ -61,7 +61,7 @@
     <!-- //create a switch to turn on/off and then send data to server through /web/button socket topic with data {status: 1/0} in the center of the bottom of the page -->
     <div class="d-flex justify-center align-center" style="margin-top: 12px;">
       <div style="margin-right: 12px;">
-        Kích hoạt cảnh báo ngã 
+        Kích hoạt cảnh báo ngã
       </div>
       <div class="">
         <label class="switch">
@@ -92,8 +92,9 @@
         removeData(charts[1]);
         removeData(charts[2]);
       }
-
-      if (+data.SOS == 1) alert("Cảnh báo, người cao tuổi cần giúp đỡ");
+      if (+data.SOS == 1) debounce(() =>
+        alert(`Cảnh báo, người cao tuổi cần giúp đỡ tại vị trí: kinh độ 104.90602991561416 vĩ độ 21.72562657106224`)
+        , 15000)
     });
 
     function getCurTime() {
@@ -130,10 +131,10 @@
   </script>
   <!-- code -->
   <script>
-    // openweather data 21.019470213962002, 105.79124574199592
-    let uvIndexAPI = `https://api.openweathermap.org/data/3.0/onecall?lat=21.019470213962002&lon=105.79124574199592&appid=e6fa53bea61f102d5f3b16a80d468d22`
-    let apiForecast = "https://api.openweathermap.org/data/2.5/forecast?lat=21.019470213962002&lon=105.79124574199592&appid=9396f69fee320a0014ac3fa7ab35381d"
-    let apiWeather = "https://api.openweathermap.org/data/2.5/weather?lat=21.019470213962002&lon=105.79124574199592&appid=9396f69fee320a0014ac3fa7ab35381d"
+    // openweather data 21.72562657106224, 104.90602991561416
+    let uvIndexAPI = `https://api.openweathermap.org/data/3.0/onecall?lat=21.72562657106224&lon=104.90602991561416&appid=e6fa53bea61f102d5f3b16a80d468d22`
+    let apiForecast = "https://api.openweathermap.org/data/2.5/forecast?lat=21.72562657106224&lon=104.90602991561416&appid=9396f69fee320a0014ac3fa7ab35381d"
+    let apiWeather = "https://api.openweathermap.org/data/2.5/weather?lat=21.72562657106224&lon=104.90602991561416&appid=9396f69fee320a0014ac3fa7ab35381d"
     fetch(apiWeather)
       .then(res => res.json())
       .then(data => {
@@ -406,6 +407,16 @@
         dataset.data.shift();
       });
       chart.update();
+    }
+
+    function debounce(func, delay) {
+      let timeoutId;
+      return function (...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+          func.apply(this, args);
+        }, delay);
+      };
     }
   </script>
 </body>

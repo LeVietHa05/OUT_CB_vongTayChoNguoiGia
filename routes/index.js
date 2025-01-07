@@ -5,15 +5,18 @@ var router = express.Router();
 
 // Create a transporter object
 let transporter = nodemailer.createTransport({
-  service: 'gmail', // You can use any email service like Yahoo, Outlook, etc.
+  service: 'Gmail', // You can use any email service like Yahoo, Outlook, etc.
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
   auth: {
-    user: 'your-email@gmail.com', // Your email id
-    pass: 'your-email-password'   // Your email password
-  }
+    user: "do4250894@gmail.com",
+    pass: "cmjv ydly phtk srve",
+  },
 });
 
-let emailFrom = "abc@gmail.com"
-let emailTo = "abcd@gmail.com"
+let emailFrom = 'do4250894@gmail.com'
+let emailTo = "luongtuz082111@gmail.com"
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -36,7 +39,7 @@ router.get('/send-email', (req, res) => {
     from: emailFrom,
     to: emailTo,
     subject: 'Canh bao nguy hiem',
-    text: 'Nguoi gia dang co trieu chung nguy hiem, vui long kiem tra lai!',
+    text: 'Nguoi gia dang co trieu chung nguy hiem, vui long kiem tra nguoi than tai vi tri https://maps.app.goo.gl/ZZtLyZBui1GZwgHq8!',
   };
 
   // Send email
